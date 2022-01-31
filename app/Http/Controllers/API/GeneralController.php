@@ -23,7 +23,7 @@ class GeneralController extends Controller
             'password' => 'required',
         ]);
 
-
+        // the password is plain text in db???
         if (Auth::guard('admin')->attempt((['email' => request('email'), 'password' => request('password')]))) {
             $user = \App\Admin::where('email', $request->email)->first();
             $token = $user->createToken('MyApp')->accessToken;
@@ -49,7 +49,7 @@ class GeneralController extends Controller
 
             return $this->apiResponse($data, '', 200);
         } else {
-            return $this->apiResponse('', 'Not Found', 401);
+            return $this->apiResponse('', 'Not Found', 404);
         }
     }
 
@@ -67,7 +67,7 @@ class GeneralController extends Controller
             }))->first()->toArray();
             return $this->apiResponse($data, '', 200);
         } else {
-            return $this->apiResponse('', 'Not Found', 401);
+            return $this->apiResponse('', 'Not Found', 404);
         }
     }
 
